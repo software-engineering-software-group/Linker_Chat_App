@@ -32,7 +32,7 @@ public class RequestHandler implements Runnable {
 	System.out.println( formatter.format(timeonly) + " Welcome " + Thread.currentThread().getName()); 
             
 	while ((input = in_client.readLine()) != null) {
-	  input = input.replaceAll("[^A-Za-z0-9 ]", "");
+	  input = input.replaceAll("[^A-Za-z0-9!?,.;:'()/<>@#$%^&* ]", "");
          SimpleDateFormat X = new SimpleDateFormat("HH:mm:ss");  
           Date Y = new Date(); 
           System.out.println(X.format(Y) + " " + Thread.currentThread().getName() + ": " + input);
