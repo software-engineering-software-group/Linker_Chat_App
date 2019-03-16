@@ -42,7 +42,7 @@ public class Server {
         /**
          * @param args the command line arguments
          */
-        System.out.println("Linker launched");
+        System.out.println("Welcome to Linker");
         if (args.length < 1) {
             System.err.println("Usage: java Server <port number>");
             System.exit(1);
