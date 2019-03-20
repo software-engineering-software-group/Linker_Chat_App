@@ -26,13 +26,15 @@ public class Client{
     
     
   public static void communication(Socket client_socket, PrintWriter output1, BufferedReader input_1, BufferedReader input_2) throws IOException{
-      String uinput;
+      String uinput,encrypt_in;
       
       
       
       
       while ((uinput = input_2.readLine()) != null) {
-        output1.println(uinput);
+          encrypt_in = Encrypted.encrypt(uinput);
+          //System.out.println(""+encrypt_in);
+        output1.println(encrypt_in);
 	System.out.println("" + input_1.readLine());
       }
   }

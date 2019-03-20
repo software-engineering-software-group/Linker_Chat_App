@@ -22,7 +22,7 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        String input;
+        String input,decrypt_input;
      
       try ( BufferedReader in_client = new BufferedReader(new InputStreamReader(client.getInputStream()));
 	BufferedWriter write_client = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));) {
@@ -32,11 +32,14 @@ public class RequestHandler implements Runnable {
 	System.out.println( formatter.format(timeonly) + " Welcome " + Thread.currentThread().getName()); 
             
 	while ((input = in_client.readLine()) != null) {
-	  input = input.replaceAll("[^A-Za-z0-9!?,.;:'()/<>@#$%^&* ]", "");
+            decrypt_input = Decrypted.decrypt(input);
+	  decrypt_input = decrypt_input.replaceAll("[^A-Za-z0-9!?,.;:'()/<>@#$%^&* ]", "");
+          
          SimpleDateFormat X = new SimpleDateFormat("HH:mm:ss");  
           Date Y = new Date(); 
-          System.out.println(X.format(Y) + " " + Thread.currentThread().getName() + ": " + input);
-	  write_client.write("Sending : " + input);
+          
+          System.out.println(X.format(Y) + " " + Thread.currentThread().getName() + ": " + decrypt_input);
+	  //write_client.write("Sending : " + decrypt_input);   //writes on client side
 	  write_client.newLine();
 	  write_client.flush();
 	}
