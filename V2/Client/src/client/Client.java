@@ -15,7 +15,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 public class Client implements Runnable{
-    public JTextField textField;
+    public JTextField textField, userField;
     public JTextArea textArea;
     public String login="Imed";
     BufferedWriter writer;
@@ -34,10 +34,16 @@ public class Client implements Runnable{
         p2.setLayout(new BorderLayout());        
         
         textField=new JTextField();
-        p1.add(textField, BorderLayout.CENTER);
+        p1.add(textField, BorderLayout.SOUTH);
         
-        JButton b1=new JButton("Send Message");
-        p1.add(b1, BorderLayout.EAST); 
+        JButton sendMessageButton=new JButton("Send Message Below");
+        p1.add(sendMessageButton, BorderLayout.EAST); 
+        
+        userField=new JTextField();
+        p1.add(userField, BorderLayout.NORTH);
+        
+        JButton usernameButton=new JButton("Enter Username Above");
+        p1.add(usernameButton, BorderLayout.WEST); 
         
         textArea=new JTextArea();
         p2.add(textArea, BorderLayout.CENTER);
@@ -55,11 +61,28 @@ public class Client implements Runnable{
         }catch(Exception e){e.printStackTrace();}
     
     
-        b1.addActionListener(new ActionListener(){
+        sendMessageButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
                 
                 String s=login+" : "+textField.getText();  
                 textField.setText("");
+                System.out.println("plain: "+ s);
+                s= Encrypted.encrypt(s);
+                System.out.println("encrypted: "+ s);
+                try{
+                    writer.write(s);
+                    writer.write("\r\n");
+                    writer.flush(); 
+                    }catch(Exception e){e.printStackTrace();}
+            }
+          }
+        );
+        
+        usernameButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ev){
+                
+                String s=login+" : "+userField.getText();  
+                userField.setText("");
                 System.out.println("plain: "+ s);
                 s= Encrypted.encrypt(s);
                 System.out.println("encrypted: "+ s);
