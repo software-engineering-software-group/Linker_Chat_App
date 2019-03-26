@@ -17,11 +17,13 @@ import java.net.*;
 public class Client implements Runnable{
     public JTextField textField, userField;
     public JTextArea textArea;
-    public String login="Imed";
+    //public String login="User";
+    public String login=Thread.currentThread().getName();
+    public String elogin;
     BufferedWriter writer;
     BufferedReader reader;
     public Client(String l){
-        login=l;        
+                
         
         
         JFrame f=new JFrame("Linker");
@@ -57,7 +59,9 @@ public class Client implements Runnable{
                  
                  reader =new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
                  
-		    		
+                 elogin = Encrypted.encrypt(login);
+                 writer.write(elogin);
+		  
         }catch(Exception e){e.printStackTrace();}
     
     
@@ -66,6 +70,7 @@ public class Client implements Runnable{
                 
                 String s=login+" : "+textField.getText();  
                 textField.setText("");
+                System.out.println(""+textField);
                 System.out.println("plain: "+ s);
                 s= Encrypted.encrypt(s);
                 System.out.println("encrypted: "+ s);
@@ -80,12 +85,15 @@ public class Client implements Runnable{
         
         usernameButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
-                
-                String s=login+" : "+userField.getText();  
+                String s = login + " has changed their name to: ";
+                login = userField.getText();  
                 userField.setText("");
-                System.out.println("plain: "+ s);
+                s += login;
+                
+                Thread.currentThread().setName(login); 
+                
                 s= Encrypted.encrypt(s);
-                System.out.println("encrypted: "+ s);
+                
                 try{
                     writer.write(s);
                     writer.write("\r\n");
@@ -93,8 +101,7 @@ public class Client implements Runnable{
                     }catch(Exception e){e.printStackTrace();}
             }
           }
-        );
-        
+        ); 
         f.setVisible(true);    
         
  

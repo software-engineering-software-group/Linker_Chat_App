@@ -21,10 +21,7 @@ final public class Encrypted {
         char mess[] = new char[message.length()];
         
         //message = message.toUpperCase();
-        
-       
-        
-        
+
         for (int x = 0, y = 0; x < message.length(); x++) {
             char c = message.charAt(x);
             if (c == ',' || c == ' ') {
