@@ -44,16 +44,17 @@ class Server implements Runnable {
             login = Decrypted.decrypt(login);
             Thread.currentThread().setName(login);
 
+         //  /* 
             for (int i = 0; i < clients.size(); i++) {
                 BufferedWriter bw1 = (BufferedWriter) clients.get(i);
-                //bw1.write("Welcome " + Thread.currentThread().getName());  RETURNING A WEIRED WELCOME MESSAGE
+                bw1.write("Welcome New User to the Chat."); //+ Thread.currentThread().getName()  
                 bw1.write("\r\n");
                 bw1.flush();
             }
+          //  */
 
             while (true) {
                 String userInput = reader.readLine().trim();
-                //System.out.println("Encrypted: "+ userInput);      
                 userInput = Decrypted.decrypt(userInput);
                 System.out.println("Received : " + userInput);
 
@@ -62,7 +63,7 @@ class Server implements Runnable {
                         BufferedWriter bw = (BufferedWriter) clients.get(i);
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date timeonly = new Date();
-                        bw.write(formatter.format(timeonly) + " " + userInput);
+                        bw.write(formatter.format(timeonly) + " " + userInput );
                         bw.write("\r\n");
                         bw.flush();
                     } catch (Exception e) {

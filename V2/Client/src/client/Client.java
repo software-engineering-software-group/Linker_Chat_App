@@ -17,17 +17,17 @@ import java.net.*;
 public class Client implements Runnable{
     public JTextField textField, userField;
     public JTextArea textArea;
+    public JScrollPane scrollBar;
     //public String login="User";
     public String login=Thread.currentThread().getName();
     public String elogin;
     BufferedWriter writer;
     BufferedReader reader;
     public Client(String l){
-                
+
         
-        
-        JFrame f=new JFrame("Linker");
-        f.setSize(400,400);        
+        JFrame clientGUI=new JFrame("Linker");
+        clientGUI.setSize(400,300);        
         
         JPanel p1=new JPanel();
         p1.setLayout(new BorderLayout());
@@ -48,9 +48,13 @@ public class Client implements Runnable{
         p1.add(usernameButton, BorderLayout.WEST); 
         
         textArea=new JTextArea();
-        p2.add(textArea, BorderLayout.CENTER);
+        scrollBar = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        p2.add(scrollBar);
         p2.add(p1, BorderLayout.SOUTH);
-        f.setContentPane(p2);
+        clientGUI.setContentPane(p2);
+        
+        clientGUI.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 
            
         try{
@@ -102,9 +106,7 @@ public class Client implements Runnable{
             }
           }
         ); 
-        f.setVisible(true);    
-        
- 
+        clientGUI.setVisible(true);    
     }
     public void run(){
              try{

@@ -20,6 +20,5 @@ public class ClientGUI {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
