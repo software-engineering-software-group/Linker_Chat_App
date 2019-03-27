@@ -14,125 +14,132 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
-public class Client implements Runnable{
+
+public class Client implements Runnable {
+
     public JTextField textField, userField;
     public JTextArea textArea;
     public JScrollPane scrollBar;
-    //public String login="User";
-    public String login=Thread.currentThread().getName();
+    public String login = Thread.currentThread().getName();
     public String elogin, message;
-    public int i =0;
+    public int i = 0;
     BufferedWriter writer;
     BufferedReader reader;
-    public Client(String l){
 
-        
-        JFrame clientGUI=new JFrame("Linker");
-        clientGUI.setSize(400,300);        
-        
-        JPanel p1=new JPanel();
+    public Client(String l) {
+
+        JFrame clientGUI = new JFrame("Linker");
+        clientGUI.setSize(400, 300);
+
+        JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
-            
-        JPanel p2=new JPanel();
-        p2.setLayout(new BorderLayout());        
-        
-        textField=new JTextField();
+
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BorderLayout());
+
+        textField = new JTextField();
         p1.add(textField, BorderLayout.SOUTH);
 
-        JButton sendMessageButton=new JButton("Send Message Below");
-        p1.add(sendMessageButton, BorderLayout.EAST); 
-                
-        JButton usernameButton=new JButton("Change Username");
-        p1.add(usernameButton, BorderLayout.WEST); 
-        
-        textArea=new JTextArea();
+        JButton sendMessageButton = new JButton("Send Message Below");
+        p1.add(sendMessageButton, BorderLayout.EAST);
+
+        JButton usernameButton = new JButton("Change Username");
+        p1.add(usernameButton, BorderLayout.WEST);
+
+        textArea = new JTextArea();
         textArea.setEditable(false);
-        scrollBar = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         p2.add(scrollBar);
         p2.add(p1, BorderLayout.SOUTH);
         clientGUI.setContentPane(p2);
-        
+
         clientGUI.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        try{
-                 Socket socketClient= new Socket("localhost",5555);
-                 writer= new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
-                 reader =new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-                 writer.flush(); 
+        try {
+            Socket socketClient = new Socket("localhost", 5555);
+            writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
+            reader = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+            writer.flush();
 
-		  
-        }catch(Exception e){e.printStackTrace();}
-        KeyAdapter Enter = new KeyAdapter(){
-        @Override
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        KeyAdapter Enter = new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     sendMessageButton.doClick();
                 }
             }
         };
         textField.addKeyListener(Enter);
-        sendMessageButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ev){
-                if (textField.getText().isEmpty() == false){
-                    String s=login+" : "+textField.getText();  
+        sendMessageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                if (textField.getText().isEmpty() == false) {
+                    String s = login + " : " + textField.getText();
                     textField.setText("");
-                    System.out.println(""+textField);
-                    System.out.println("plain: "+ s);
-                    s= Encrypted.encrypt(s);
-                    System.out.println("encrypted: "+ s);
-                    try{
+                    System.out.println("" + textField);
+                    System.out.println("plain: " + s);
+                    s = Encrypted.encrypt(s);
+                    System.out.println("encrypted: " + s);
+                    try {
                         writer.write(s);
                         writer.write("\r\n");
-                        writer.flush(); 
-                        }catch(Exception e){e.printStackTrace();}
-                
+                        writer.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
-          }
+        }
         );
-        
-        usernameButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ev){
-  
-                if (i == 0){
+
+        usernameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+
+                if (i == 0) {
                     message = "Welcome to Linker!\nPlease enter a username.";
                     i++;
-                }
-                else{
+                } else {
                     message = "Please enter a new username";
                 }
                 String s = login + " has changed their name to: ";
-                login = JOptionPane.showInputDialog(null,message,"Linker",JOptionPane.PLAIN_MESSAGE);
+                login = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
 
-                clientGUI.setTitle("Linker - "+login);
+                clientGUI.setTitle("Linker - " + login);
 
                 s += login;
-                
-                Thread.currentThread().setName(login); 
-                
-                s= Encrypted.encrypt(s);
-                
-                try{
+
+                Thread.currentThread().setName(login);
+
+                s = Encrypted.encrypt(s);
+
+                try {
                     writer.write(s);
                     writer.write("\r\n");
-                    writer.flush(); 
-                    }catch(Exception e){e.printStackTrace();}
-            }
-          }
-        ); 
-        clientGUI.setVisible(true);    
-    usernameButton.doClick();
-
-    }
-    public void run(){
-        JScrollBar vertical = scrollBar.getVerticalScrollBar();
-             try{
-                String serverMsg=""; 
-                while((serverMsg = reader.readLine()) != null){
-                    System.out.println("from server: " + serverMsg);
-                    textArea.append(serverMsg+"\n");
-                    vertical.setValue( vertical.getMaximum() );
+                    writer.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-        }catch(Exception e){e.printStackTrace();}   
+            }
+        }
+        );
+        clientGUI.setVisible(true);
+        usernameButton.doClick();
+    }
+
+    public void run() {
+        JScrollBar vertical = scrollBar.getVerticalScrollBar();
+        try {
+            String serverMsg = "";
+            while ((serverMsg = reader.readLine()) != null) {
+                System.out.println("from server: " + serverMsg);
+                textArea.append(serverMsg + "\n");
+                vertical.setValue(vertical.getMaximum());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

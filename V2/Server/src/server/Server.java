@@ -11,7 +11,7 @@ package server;
  */
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.Vector;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,27 +31,23 @@ class Server implements Runnable {
 
     public void run() {
         String login;
-        int x = 0;
         try {
             BufferedReader reader
                     = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             BufferedWriter writer
                     = new BufferedWriter(new OutputStreamWriter(connectionSocket.getOutputStream()));
-
             clients.add(writer);
 
             login = reader.readLine();
             login = Decrypted.decrypt(login);
             Thread.currentThread().setName(login);
 
-         //  /* 
             for (int i = 0; i < clients.size(); i++) {
                 BufferedWriter bw1 = (BufferedWriter) clients.get(i);
-                bw1.write("Welcome "+ login.subSequence(31, login.length()) +" to the Chat."); //+ Thread.currentThread().getName()  
+                bw1.write("Welcome " + login.subSequence(31, login.length()) + " to the Chat."); //+ Thread.currentThread().getName()  
                 bw1.write("\r\n");
                 bw1.flush();
             }
-          //  */
 
             while (true) {
                 String userInput = reader.readLine().trim();
@@ -63,7 +59,7 @@ class Server implements Runnable {
                         BufferedWriter bw = (BufferedWriter) clients.get(i);
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date timeonly = new Date();
-                        bw.write(formatter.format(timeonly) + " " + userInput );
+                        bw.write(formatter.format(timeonly) + " " + userInput);
                         bw.write("\r\n");
                         bw.flush();
                     } catch (Exception e) {
