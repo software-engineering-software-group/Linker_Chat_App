@@ -52,6 +52,7 @@ public class Client implements Runnable {
 
         textArea = new JTextArea();
         textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
         textArea.setEditable(false);
         scrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
