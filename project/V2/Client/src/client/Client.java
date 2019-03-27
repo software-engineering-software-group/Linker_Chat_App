@@ -52,7 +52,6 @@ public class Client implements Runnable {
 
         textArea = new JTextArea();
         textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
         textArea.setEditable(false);
         scrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -112,15 +111,21 @@ public class Client implements Runnable {
                     message = "Please enter a new username.";
                 }
                 String s = login + " has changed their name to: ";
-                login = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
-                clientGUI.setTitle("Linker - " + login);
-
-                s += login;
-
-                Thread.currentThread().setName(login);
-
-                s = Encrypted.encrypt(s);
-
+                String k;
+                k = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
+                if(k==null){
+                    clientGUI.setTitle("Linker - " + login);
+                    s += login;
+                    Thread.currentThread().setName(login);
+                    s = Encrypted.encrypt(s);
+                }
+                else{
+                    clientGUI.setTitle("Linker - " + k);
+                    s += k;
+                    Thread.currentThread().setName(k);
+                    s = Encrypted.encrypt(s);
+                    login = k;
+                }
                 try {
                     writer.write(s);
                     writer.write("\r\n");
