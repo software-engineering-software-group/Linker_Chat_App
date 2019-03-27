@@ -30,7 +30,7 @@ class Server implements Runnable {
     }
 
     public void run() {
-        String login;
+        String login, username;
         try {
             BufferedReader reader
                     = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -41,10 +41,12 @@ class Server implements Runnable {
             login = reader.readLine();
             login = Decrypted.decrypt(login);
             Thread.currentThread().setName(login);
+            username = login.subSequence(32, login.length()).toString();
+
 
             for (int i = 0; i < clients.size(); i++) {
                 BufferedWriter bw1 = (BufferedWriter) clients.get(i);
-                bw1.write("Welcome " + login.subSequence(31, login.length()) + " to the Chat."); //+ Thread.currentThread().getName()  
+                bw1.write("Welcome " + username + " to the Chat."); //+ Thread.currentThread().getName()  
                 bw1.write("\r\n");
                 bw1.flush();
             }
@@ -54,12 +56,14 @@ class Server implements Runnable {
                 userInput = Decrypted.decrypt(userInput);
                 System.out.println("Received : " + userInput);
 
+                
+                
                 for (int i = 0; i < clients.size(); i++) {
                     try {
                         BufferedWriter bw = (BufferedWriter) clients.get(i);
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date timeonly = new Date();
-                        bw.write(formatter.format(timeonly) + " " + userInput);
+                        bw.write("["+formatter.format(timeonly)+"] "+ userInput);
                         bw.write("\r\n");
                         bw.flush();
                     } catch (Exception e) {
