@@ -51,6 +51,8 @@ public class Client implements Runnable {
         p2.add(usernameButton, BorderLayout.NORTH);
 
         textArea = new JTextArea();
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
         textArea.setEditable(false);
         scrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -139,7 +141,7 @@ public class Client implements Runnable {
             String serverMsg = "";
             while ((serverMsg = reader.readLine()) != null) {
                 System.out.println("from server: " + serverMsg);
-                textArea.append(serverMsg.replaceAll("(.{90})", "$1\n") + "\n");
+                textArea.append(serverMsg + "\n");
                 vertical.setValue(vertical.getMaximum());
             }
         } catch (Exception e) {
