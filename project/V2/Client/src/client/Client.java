@@ -17,7 +17,7 @@ import java.net.*;
 
 public class Client implements Runnable {
 
-    public JTextField textField, userField;
+    public JTextField textField;
     public JTextArea textArea;
     public JScrollPane scrollBar;
     public String login = Thread.currentThread().getName();
@@ -29,7 +29,7 @@ public class Client implements Runnable {
     public Client(String l) {
 
         JFrame clientGUI = new JFrame("Linker");
-        clientGUI.setSize(400, 300);
+        clientGUI.setSize(533, 300);
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
@@ -38,17 +38,22 @@ public class Client implements Runnable {
         p2.setLayout(new BorderLayout());
 
         textField = new JTextField();
-        p1.add(textField, BorderLayout.SOUTH);
+        p1.add(textField);
+        JScrollBar scrollBar2 = new JScrollBar(JScrollBar.HORIZONTAL);
+        BoundedRangeModel hsize = textField.getHorizontalVisibility();
+        scrollBar2.setModel(hsize);
+        p1.add(scrollBar2, BorderLayout.SOUTH);
 
-        JButton sendMessageButton = new JButton("Send Message Below");
+        JButton sendMessageButton = new JButton("Send");
         p1.add(sendMessageButton, BorderLayout.EAST);
 
         JButton usernameButton = new JButton("Change Username");
-        p1.add(usernameButton, BorderLayout.WEST);
+        p2.add(usernameButton, BorderLayout.NORTH);
 
         textArea = new JTextArea();
         textArea.setEditable(false);
         scrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         p2.add(scrollBar);
         p2.add(p1, BorderLayout.SOUTH);
         clientGUI.setContentPane(p2);
@@ -102,11 +107,10 @@ public class Client implements Runnable {
                     message = "Welcome to Linker!\nPlease enter a username.";
                     i++;
                 } else {
-                    message = "Please enter a new username";
+                    message = "Please enter a new username.";
                 }
                 String s = login + " has changed their name to: ";
                 login = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
-
                 clientGUI.setTitle("Linker - " + login);
 
                 s += login;
@@ -135,7 +139,7 @@ public class Client implements Runnable {
             String serverMsg = "";
             while ((serverMsg = reader.readLine()) != null) {
                 System.out.println("from server: " + serverMsg);
-                textArea.append(serverMsg + "\n");
+                textArea.append(serverMsg.replaceAll("(.{90})", "$1\n") + "\n");
                 vertical.setValue(vertical.getMaximum());
             }
         } catch (Exception e) {
