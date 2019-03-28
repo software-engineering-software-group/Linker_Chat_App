@@ -12,7 +12,7 @@ import java.util.Locale;
  * @author kings
  */
 final public class clientCipher {
-    public static String key = "LINKERKEY";
+    public static String key = "DEFAULT";
     public static String lowkey = key.toLowerCase();
    
     private clientCipher(){
