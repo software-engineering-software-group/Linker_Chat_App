@@ -38,13 +38,19 @@ public class Cross_cipher_test {
     }
 
     /**
-     * Test of encrypt method, of class Encrypted.
+     * Test of encrypt method, of class 
      */
+    
+    
     @Test
     public void test() {
+        /*
+            test simple one word lowercase and key (correct)
+        */
         System.out.println("client encrypt - server decrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -53,6 +59,21 @@ public class Cross_cipher_test {
     }
     
     
+    @Test
+    public void test_not() {
+        /*
+            test simple one word lowercase and key (correct)
+        */
+        System.out.println("client encrypt - server decrypt");
+        String message = "hello";
+        String expResult = "hello";
+        clientCipher.changekey("NOTKEY");
+        String result = clientCipher.encrypt(message);
+        result = server.serverCipher.decrypt(result);
+        assertNotEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
     
     @Test
     public void test1() {
@@ -62,6 +83,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -78,6 +100,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "1234567";
         String expResult = "1234567";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -93,6 +116,7 @@ public class Cross_cipher_test {
         System.out.println("eclient encrypt - server decrypt");
         String message = ",.,/;''[] =-_+";
         String expResult = ",.,/;''[] =-_+";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -109,6 +133,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "hello! I am 12 years old";
         String expResult = "hello! I am 12 years old";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -124,6 +149,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "HELLO";
         String expResult = "HELLO";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -140,6 +166,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "HELLO! how are YOU>.?";
         String expResult = "HELLO! how are YOU>.?";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = server.serverCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -154,6 +181,7 @@ public class Cross_cipher_test {
         System.out.println("client encrypt - server decrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -171,6 +199,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -187,6 +216,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = "1234567";
         String expResult = "1234567";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -202,6 +232,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = ",.,/;''[] =-_+";
         String expResult = ",.,/;''[] =-_+";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -218,6 +249,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = "hello! I am 12 years old";
         String expResult = "hello! I am 12 years old";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -233,6 +265,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = "HELLO";
         String expResult = "HELLO";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);
@@ -249,6 +282,7 @@ public class Cross_cipher_test {
         System.out.println("client decrypt- server encrypt");
         String message = "HELLO! how are YOU>.?";
         String expResult = "HELLO! how are YOU>.?";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.decrypt(message);
         result = server.serverCipher.encrypt(result);
         assertEquals(expResult, result);

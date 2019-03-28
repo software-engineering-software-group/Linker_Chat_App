@@ -45,6 +45,7 @@ public class clientCipherTest {
         System.out.println("client encrypt - decrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -62,6 +63,7 @@ public class clientCipherTest {
         System.out.println("client encrypt -  decrypt");
         String message = "hello";
         String expResult = "hello";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -78,6 +80,7 @@ public class clientCipherTest {
         System.out.println("client encrypt -  decrypt");
         String message = "1234567";
         String expResult = "1234567";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -93,6 +96,7 @@ public class clientCipherTest {
         System.out.println("eclient encrypt -  decrypt");
         String message = ",.,/;''[] =-_+";
         String expResult = ",.,/;''[] =-_+";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -109,6 +113,7 @@ public class clientCipherTest {
         System.out.println("client encrypt -  decrypt");
         String message = "hello! I am 12 years old";
         String expResult = "hello! I am 12 years old";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -124,6 +129,7 @@ public class clientCipherTest {
         System.out.println("client encrypt -  decrypt");
         String message = "HELLO";
         String expResult = "HELLO";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
@@ -140,6 +146,7 @@ public class clientCipherTest {
         System.out.println("client encrypt -  decrypt");
         String message = "HELLO! how are YOU>.?";
         String expResult = "HELLO! how are YOU>.?";
+        clientCipher.changekey("LINKERKEY");
         String result = clientCipher.encrypt(message);
         result = clientCipher.decrypt(result);
         assertEquals(expResult, result);
