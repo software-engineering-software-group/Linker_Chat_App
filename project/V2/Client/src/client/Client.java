@@ -22,6 +22,7 @@ public class Client implements Runnable {
     public JScrollPane scrollBar;
     public String login = Thread.currentThread().getName();
     public String elogin, message;
+    public JButton sendMessageButton,usernameButton;
     public int i = 0;
     BufferedWriter writer;
     BufferedReader reader;
@@ -44,10 +45,10 @@ public class Client implements Runnable {
         scrollBar2.setModel(hsize);
         p1.add(scrollBar2, BorderLayout.SOUTH);
 
-        JButton sendMessageButton = new JButton("Send");
+        sendMessageButton = new JButton("Send");
         p1.add(sendMessageButton, BorderLayout.EAST);
 
-        JButton usernameButton = new JButton("Change Username");
+        usernameButton = new JButton("Change Username");
         p2.add(usernameButton, BorderLayout.NORTH);
 
         textArea = new JTextArea();
@@ -87,7 +88,7 @@ public class Client implements Runnable {
                     textField.setText("");
                     System.out.println("" + textField);
                     System.out.println("plain: " + s);
-                    s = Encrypted.encrypt(s);
+                    s = clientCipher.encrypt(s);
                     System.out.println("encrypted: " + s);
                     try {
                         writer.write(s);
@@ -118,13 +119,13 @@ public class Client implements Runnable {
                     clientGUI.setTitle("Linker - " + login);
                     s += login;
                     Thread.currentThread().setName(login);
-                    s = Encrypted.encrypt(s);
+                    s = clientCipher.encrypt(s);
                 }
                 else{
                     clientGUI.setTitle("Linker - " + k);
                     s += k;
                     Thread.currentThread().setName(k);
-                    s = Encrypted.encrypt(s);
+                    s = clientCipher.encrypt(s);
                     login = k;
                 }
                 try {
@@ -141,11 +142,14 @@ public class Client implements Runnable {
         usernameButton.doClick();
     }
 
+    
+
     public void run() {
         JScrollBar vertical = scrollBar.getVerticalScrollBar();
         try {
             String serverMsg = "";
             while ((serverMsg = reader.readLine()) != null) {
+                serverMsg = clientCipher.decrypt(serverMsg);
                 System.out.println("from server: " + serverMsg);
                 textArea.append(serverMsg + "\n");
                 vertical.setValue(vertical.getMaximum());
@@ -153,5 +157,16 @@ public class Client implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    
+    private void setComponentsNames(){
+        /*
+            naming gui components for testing
+        */
+        sendMessageButton.setName("sendbutton");
+        usernameButton.setName("unbutton");
+        textField.setName("input");
+        textArea.setName("area");
     }
 }

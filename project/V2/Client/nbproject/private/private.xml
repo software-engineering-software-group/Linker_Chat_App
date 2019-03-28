@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/888/V33/Client/src/client/Encrypted.java</file>
-            <file>file:/F:/888/V33/Client/src/client/ClientGUI.java</file>
-            <file>file:/F:/888/V33/Client/src/client/Client.java</file>
+            <file>file:/D:/ryerson/winterterm/cps888/lab/Linker_Chat_App-master/Linker_Chat_App-master/project/V2/Client/test/client/Cross_cipher_test.java</file>
+            <file>file:/D:/ryerson/winterterm/cps888/lab/Linker_Chat_App-master/Linker_Chat_App-master/project/V2/Client/src/client/clientCipher.java</file>
+            <file>file:/D:/ryerson/winterterm/cps888/lab/Linker_Chat_App-master/Linker_Chat_App-master/project/V2/Client/test/client/clientCipherTest.java</file>
+            <file>file:/D:/ryerson/winterterm/cps888/lab/Linker_Chat_App-master/Linker_Chat_App-master/project/V2/Client/src/client/Client.java</file>
         </group>
     </open-files>
 </project-private>

@@ -30,7 +30,7 @@ class Server implements Runnable {
     }
 
     public void run() {
-        String login, username;
+        String login, username,message;
         try {
             BufferedReader reader
                     = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -39,21 +39,24 @@ class Server implements Runnable {
             clients.add(writer);
 
             login = reader.readLine();
-            login = Decrypted.decrypt(login);
+            login = serverCipher.decrypt(login);
             Thread.currentThread().setName(login);
             username = login.subSequence(32, login.length()).toString();
 
-
+            
             for (int i = 0; i < clients.size(); i++) {
                 BufferedWriter bw1 = (BufferedWriter) clients.get(i);
-                bw1.write("Welcome " + username + " to the Chat."); //+ Thread.currentThread().getName()  
+                
+                message = "Welcome " + username + " to the Chat.";
+                message = serverCipher.encrypt(message);
+                bw1.write(message); //+ Thread.currentThread().getName()  
                 bw1.write("\r\n");
                 bw1.flush();
             }
 
             while (true) {
                 String userInput = reader.readLine().trim();
-                userInput = Decrypted.decrypt(userInput);
+                userInput = serverCipher.decrypt(userInput);
                 System.out.println("Received : " + userInput);
 
                 
@@ -63,7 +66,9 @@ class Server implements Runnable {
                         BufferedWriter bw = (BufferedWriter) clients.get(i);
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         Date timeonly = new Date();
-                        bw.write("["+formatter.format(timeonly)+"] "+ userInput);
+                        message = "["+formatter.format(timeonly)+"] "+ userInput; 
+                        message = serverCipher.encrypt(message);
+                        bw.write(message);
                         bw.write("\r\n");
                         bw.flush();
                     } catch (Exception e) {
