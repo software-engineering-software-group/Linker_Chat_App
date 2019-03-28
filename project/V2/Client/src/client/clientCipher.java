@@ -5,13 +5,15 @@
  */
 package client;
 
+import java.util.Locale;
+
 /**
  *
  * @author kings
  */
 final public class clientCipher {
     private static final String key = "LINKERKEY";
-    private static final String lowkey = "linkerkey";
+    private static final String lowkey = key.toLowerCase();
    
     private clientCipher(){
       /*Private Constructor will prevent the instantiation of this class directly*/
