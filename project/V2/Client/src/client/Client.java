@@ -28,7 +28,7 @@ public class Client implements Runnable {
     BufferedReader reader;
 
     public Client(String l) {
-        String key;
+
         JFrame clientGUI = new JFrame("Linker");
         clientGUI.setSize(533, 300);
 
@@ -105,16 +105,21 @@ public class Client implements Runnable {
 
         usernameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-
+                String key, k;
                 if (i == 0) {
+
                     message = "Welcome to Linker!\nPlease enter a username.";
                     i++;
+                    k = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
+                    key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker - Server Key", JOptionPane.PLAIN_MESSAGE);
+                    clientCipher.changekey(key);
                 } else {
                     message = "Please enter a new username.";
+                    k = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
                 }
                 String s = login + " has changed their name to: ";
-                String k;
-                k = JOptionPane.showInputDialog(null, message, "Linker", JOptionPane.PLAIN_MESSAGE);
+
+
                 if(k==null){
                     clientGUI.setTitle("Linker - " + login);
                     s += login;
@@ -140,8 +145,7 @@ public class Client implements Runnable {
         );
         clientGUI.setVisible(true);
         usernameButton.doClick();
-        key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker - Server Key", JOptionPane.PLAIN_MESSAGE);
-        clientCipher.changekey(key);
+
         
     }
 
