@@ -12,13 +12,16 @@ import java.util.Locale;
  * @author kings
  */
 final public class clientCipher {
-    private static final String key = "LINKERKEY";
-    private static final String lowkey = key.toLowerCase();
+    public static String key = "LINKERKEY";
+    public static String lowkey = key.toLowerCase();
    
     private clientCipher(){
       /*Private Constructor will prevent the instantiation of this class directly*/
     }
-    
+    public static void test(String newKey){
+        key = newKey;
+        lowkey = key.toLowerCase();
+   }
    public static String encrypt(String message){
         String encodedMessage = "";
         char mess[] = new char[message.length()];
