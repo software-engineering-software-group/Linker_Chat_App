@@ -141,12 +141,8 @@ public class Client implements Runnable {
         clientGUI.setVisible(true);
         usernameButton.doClick();
         key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker - Server Key", JOptionPane.PLAIN_MESSAGE);
-        if (key == null || key.isEmpty()){
-            clientCipher.test("default");
-        }
-        else{
-            clientCipher.test(key);
-        }
+        clientCipher.changekey(key);
+        
     }
 
     

@@ -18,7 +18,10 @@ final public class clientCipher {
     private clientCipher(){
       /*Private Constructor will prevent the instantiation of this class directly*/
     }
-    public static void test(String newKey){
+    public static void changekey(String newKey){
+        if (newKey == null || newKey.isEmpty()){
+            newKey ="default";
+        }
         key = newKey;
         lowkey = key.toLowerCase();
    }
