@@ -21,14 +21,14 @@ public class Client implements Runnable {
     public JTextArea textArea;
     public JScrollPane scrollBar;
     public String login = Thread.currentThread().getName();
-    public String elogin, message;
+    public String key, message;
     public JButton sendMessageButton,usernameButton;
     public int i = 0;
     BufferedWriter writer;
     BufferedReader reader;
 
     public Client(String l) {
-
+        
         JFrame clientGUI = new JFrame("Linker");
         clientGUI.setSize(533, 300);
 
@@ -39,7 +39,7 @@ public class Client implements Runnable {
         p2.setLayout(new BorderLayout());
 
         textField = new JTextField();
-        p1.add(textField);
+        p1.add(textField, BorderLayout.CENTER);
         JScrollBar scrollBar2 = new JScrollBar(JScrollBar.HORIZONTAL);
         BoundedRangeModel hsize = textField.getHorizontalVisibility();
         scrollBar2.setModel(hsize);
@@ -140,6 +140,11 @@ public class Client implements Runnable {
         );
         clientGUI.setVisible(true);
         usernameButton.doClick();
+        key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker", JOptionPane.PLAIN_MESSAGE);
+        if (key ==null | key == ""){
+            key = "default";
+        }
+        clientCipher.test(key);
     }
 
     
