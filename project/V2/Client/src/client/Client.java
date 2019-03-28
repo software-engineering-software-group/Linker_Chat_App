@@ -21,14 +21,14 @@ public class Client implements Runnable {
     public JTextArea textArea;
     public JScrollPane scrollBar;
     public String login = Thread.currentThread().getName();
-    public String key, message;
+    public String message;
     public JButton sendMessageButton,usernameButton;
     public int i = 0;
     BufferedWriter writer;
     BufferedReader reader;
 
     public Client(String l) {
-        
+        String key;
         JFrame clientGUI = new JFrame("Linker");
         clientGUI.setSize(533, 300);
 
@@ -140,11 +140,13 @@ public class Client implements Runnable {
         );
         clientGUI.setVisible(true);
         usernameButton.doClick();
-        key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker", JOptionPane.PLAIN_MESSAGE);
-        if (key ==null | key == ""){
-            key = "default";
+        key = JOptionPane.showInputDialog(null, "Please enter server Key.", "Linker - Server Key", JOptionPane.PLAIN_MESSAGE);
+        if (key == null || key.isEmpty()){
+            clientCipher.test("default");
         }
-        clientCipher.test(key);
+        else{
+            clientCipher.test(key);
+        }
     }
 
     
